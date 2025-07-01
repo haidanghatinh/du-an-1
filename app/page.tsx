@@ -22,6 +22,7 @@ import {
   Check,
   ArrowDown,
 } from "lucide-react"
+import Tilt from 'react-parallax-tilt'
 
 // 8 nhu cầu phổ biến với icon và mô tả
 const popularNeeds = [
@@ -250,48 +251,32 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
       {/* PHẦN 1: HERO SLIDER */}
       <section className="relative">
-        {/* Main Container with Modern Frame */}
-        <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto px-1 py-2 sm:px-4 sm:py-8">
           <div className="relative overflow-hidden rounded-3xl shadow-2xl bg-white/10 backdrop-blur-sm border border-white/20">
-            {/* Slides */}
-            <div className="relative h-[70vh] min-h-[500px]">
+            {/* Hiệu ứng nền động */}
+            <div className="absolute -top-10 -left-10 w-40 h-40 bg-gradient-to-br from-blue-300/30 to-teal-200/30 rounded-full blur-2xl animate-pulse z-0" />
+            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-gradient-to-tr from-teal-300/30 to-blue-200/30 rounded-full blur-2xl animate-pulse z-0" />
+            <div className="relative h-[60vw] min-h-[260px] max-h-[420px] sm:h-[60vh] sm:min-h-[400px] flex items-center justify-center">
               {popularNeeds.map((need, index) => (
                 <div
                   key={need.id}
-                  className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
-                    index === currentSlide ? "opacity-100 scale-100" : "opacity-0 scale-105"
-                  }`}
+                  className={`absolute inset-0 transition-all duration-1000 ease-in-out ${index === currentSlide ? "opacity-100 scale-100 z-10" : "opacity-0 scale-105 z-0"}`}
                 >
-                  {/* Background Image */}
-                  <div
-                    className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: `url(${need.image})` }}
-                  />
-
-                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${need.image})` }} />
                   <div className={`absolute inset-0 bg-gradient-to-r ${need.gradient} opacity-80`} />
-
-                  {/* Content */}
-                  <div className="relative z-10 flex items-center justify-center h-full px-8">
-                    <div className="text-center text-white max-w-4xl">
-                      {/* Icon */}
-                      <div className="mb-6">
-                        <div className="inline-flex items-center justify-center w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full border border-white/30">
-                          <need.icon className="w-10 h-10 text-white" />
+                  <div className="relative z-10 flex items-center justify-center h-full px-2 sm:px-8">
+                    <div className="text-center text-white max-w-xs sm:max-w-2xl mx-auto">
+                      <div className="mb-3 sm:mb-6 flex justify-center">
+                        <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-white/20 backdrop-blur-sm rounded-full border border-white/30">
+                          <need.icon className="w-7 h-7 sm:w-10 sm:h-10 text-white" />
                         </div>
                       </div>
-
-                      {/* Title */}
-                      <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 animate-fade-in">{need.title}</h1>
-
-                      {/* Subtitle */}
-                      <p className="text-lg md:text-xl lg:text-2xl mb-8 opacity-90 animate-fade-in">{need.subtitle}</p>
-
-                      {/* CTA Button */}
+                      <h1 className="text-xl sm:text-3xl font-bold mb-2 sm:mb-4 animate-fade-in leading-tight">{need.title}</h1>
+                      <p className="text-sm sm:text-lg mb-4 sm:mb-8 opacity-90 animate-fade-in">{need.subtitle}</p>
                       <Button
                         onClick={scrollToCriteria}
                         size="lg"
-                        className="bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/30 hover:scale-105 transition-all duration-200 px-8 py-4 text-lg font-semibold rounded-full shadow-lg"
+                        className="bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/30 hover:scale-105 transition-all duration-200 px-5 sm:px-8 py-2.5 sm:py-4 text-base sm:text-lg font-semibold rounded-full shadow-lg"
                       >
                         <Search className="mr-2 h-5 w-5" />
                         Tìm ngay thẻ phù hợp
@@ -302,31 +287,29 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-
             {/* Navigation Arrows */}
             <Button
               variant="ghost"
               size="icon"
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full w-12 h-12"
+              className="absolute left-2 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full w-10 h-10 sm:w-12 sm:h-12"
               onClick={() => setCurrentSlide((prev) => (prev - 1 + popularNeeds.length) % popularNeeds.length)}
             >
-              <ChevronLeft className="h-6 w-6" />
+              <ChevronLeft className="h-5 w-5" />
             </Button>
             <Button
               variant="ghost"
               size="icon"
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full w-12 h-12"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full w-10 h-10 sm:w-12 sm:h-12"
               onClick={() => setCurrentSlide((prev) => (prev + 1) % popularNeeds.length)}
             >
-              <ChevronRight className="h-6 w-6" />
+              <ChevronRight className="h-5 w-5" />
             </Button>
-
             {/* Slide Indicators */}
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-2">
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2">
               {popularNeeds.map((_, index) => (
                 <button
                   key={index}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                     index === currentSlide ? "bg-white scale-125 shadow-lg" : "bg-white/50 hover:bg-white/70"
                   }`}
                   onClick={() => setCurrentSlide(index)}
@@ -337,15 +320,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* PHẦN 2: CHỌN TIÊU CHÍ - GLASSMORPHISM */}
-      <section id="criteria-section" className="py-8 px-2 md:py-16 md:px-4">
+      {/* PHẦN 2: 8 TIÊU CHÍ - mobile scroll ngang, desktop grid */}
+      <section id="criteria-section" className="py-2 px-1 sm:py-8 sm:px-2 md:py-16 md:px-4">
         <div className="max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-4">Chọn nhu cầu quan trọng nhất với bạn</h2>
-            <p className="text-base md:text-lg text-gray-600 mb-2">Chọn tối đa 3 tiêu chí để chúng tôi gợi ý thẻ phù hợp nhất</p>
+          <div className="text-center mb-4 md:mb-12">
+            <h2 className="text-lg sm:text-2xl md:text-4xl font-bold text-gray-900 mb-1 md:mb-4">Chọn nhu cầu quan trọng nhất với bạn</h2>
+            <p className="text-xs sm:text-base md:text-lg text-gray-600 mb-2">Chọn tối đa 3 tiêu chí để chúng tôi gợi ý thẻ phù hợp nhất</p>
             <div className="flex items-center justify-center space-x-2">
-              <Badge variant={selectedCriteria.length > 0 ? "default" : "secondary"} className="text-sm">
+              <Badge variant={selectedCriteria.length > 0 ? "default" : "secondary"} className="text-xs sm:text-sm">
                 Đã chọn: {selectedCriteria.length}/3
               </Badge>
               {selectedCriteria.length === 3 && (
@@ -356,50 +338,43 @@ export default function HomePage() {
               )}
             </div>
           </div>
-
-          {/* Glassmorphism Container */}
           <div className="relative">
-            {/* Background Blur Elements */}
-            <div className="absolute -top-10 -left-10 w-32 h-32 md:w-40 md:h-40 bg-teal-400/20 rounded-full blur-3xl"></div>
-            <div className="absolute -bottom-10 -right-10 w-32 h-32 md:w-40 md:h-40 bg-blue-400/20 rounded-full blur-3xl"></div>
-
+            {/* Hiệu ứng nền blur */}
+            <div className="absolute -top-8 -left-8 w-24 h-24 bg-teal-400/20 rounded-full blur-2xl" />
+            <div className="absolute -bottom-8 -right-8 w-24 h-24 bg-blue-400/20 rounded-full blur-2xl" />
             <Card className="backdrop-blur-xl bg-white/60 border border-white/30 shadow-2xl rounded-3xl overflow-hidden">
-              <CardContent className="p-4 md:p-8">
+              <CardContent className="p-2 sm:p-4 md:p-8">
                 <TooltipProvider>
-                  <div className="flex overflow-x-auto gap-3 md:grid md:grid-cols-4 md:gap-6 scrollbar-hide">
+                  <div className="flex overflow-x-auto gap-2 sm:gap-3 md:grid md:grid-cols-4 md:gap-6 scrollbar-hide pb-2">
                     {criteriaOptions.map((criterion) => {
                       const isSelected = selectedCriteria.includes(criterion.id)
                       const isDisabled = selectedCriteria.length >= 3 && !isSelected
-
                       return (
                         <Tooltip key={criterion.id}>
                           <TooltipTrigger asChild>
-                            <div
-                              className={`group relative min-w-[140px] md:min-w-0 p-3 md:p-6 flex flex-col items-center justify-center rounded-2xl cursor-pointer transition-all duration-300 transform ${
-                                isSelected
-                                  ? "bg-gradient-to-br from-teal-500/20 to-blue-500/20 border-2 border-teal-400/50 shadow-lg scale-105 animate-pulse"
-                                  : isDisabled
-                                    ? "bg-white/10 border border-gray-300/30 opacity-50 cursor-not-allowed"
-                                    : "bg-white/40 border border-white/30 hover:bg-white/60 hover:border-teal-400/50 hover:scale-105 hover:shadow-lg"
-                              } backdrop-blur-sm`}
-                              onClick={() => !isDisabled && handleCriteriaSelect(criterion.id)}
-                              style={{ boxShadow: isSelected ? '0 4px 24px 0 rgba(13,148,136,0.15)' : undefined }}
-                            >
-                              {/* Selection Indicator */}
-                              {isSelected && (
-                                <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-teal-500 to-blue-500 rounded-full flex items-center justify-center shadow-lg">
-                                  <Check className="w-3 h-3 text-white" />
-                                </div>
-                              )}
-
-                              {/* Icon */}
-                              <div className="text-3xl md:text-4xl mb-2 md:mb-3 text-center drop-shadow-lg">{criterion.icon}</div>
-
-                              {/* Label */}
-                              <h3 className="font-semibold text-gray-900 text-center text-xs md:text-base mb-1 md:mb-2">
-                                {criterion.label}
-                              </h3>
-                            </div>
+                            <Tilt tiltMaxAngleX={12} tiltMaxAngleY={12} glareEnable={true} glareMaxOpacity={0.12} scale={1.04} transitionSpeed={700} className="min-w-[110px] sm:min-w-[140px]">
+                              <div
+                                className={`group relative p-2 sm:p-3 md:p-6 flex flex-col items-center justify-center rounded-2xl cursor-pointer transition-all duration-300 transform ${
+                                  isSelected
+                                    ? "bg-gradient-to-br from-teal-500/20 to-blue-500/20 border-2 border-teal-400/70 shadow-xl scale-105 animate-pulse"
+                                    : isDisabled
+                                      ? "bg-white/10 border border-gray-300/30 opacity-50 cursor-not-allowed"
+                                      : "bg-white/40 border border-white/30 hover:bg-white/60 hover:border-teal-400/50 hover:scale-105 hover:shadow-lg"
+                                } backdrop-blur-sm`}
+                                onClick={() => !isDisabled && handleCriteriaSelect(criterion.id)}
+                                style={{ boxShadow: isSelected ? '0 4px 24px 0 rgba(13,148,136,0.18)' : undefined }}
+                              >
+                                {isSelected && (
+                                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-teal-500 to-blue-500 rounded-full flex items-center justify-center shadow-lg">
+                                    <Check className="w-3 h-3 text-white" />
+                                  </div>
+                                )}
+                                <div className="text-2xl sm:text-3xl md:text-4xl mb-1 sm:mb-2 md:mb-3 text-center drop-shadow-lg">{criterion.icon}</div>
+                                <h3 className="font-semibold text-gray-900 text-center text-xs sm:text-sm md:text-base mb-0.5 sm:mb-1 md:mb-2">
+                                  {criterion.label}
+                                </h3>
+                              </div>
+                            </Tilt>
                           </TooltipTrigger>
                           <TooltipContent side="bottom" className="max-w-xs">
                             <p className="text-sm">{criterion.description}</p>
@@ -408,9 +383,8 @@ export default function HomePage() {
                       )
                     })}
                   </div>
-
                   {/* CTA Button */}
-                  <div className="text-center mt-8 md:mt-12">
+                  <div className="text-center mt-4 md:mt-12">
                     <Button
                       onClick={handleSearch}
                       disabled={selectedCriteria.length === 0}
@@ -424,7 +398,6 @@ export default function HomePage() {
                       <Search className="mr-2 md:mr-3 h-5 w-5 md:h-6 md:w-6" />🔍 Tìm kiếm thẻ phù hợp
                       <Sparkles className="ml-2 md:ml-3 h-5 w-5 md:h-6 md:w-6" />
                     </Button>
-
                     {selectedCriteria.length === 0 && (
                       <p className="text-xs md:text-sm text-gray-500 mt-3 animate-bounce">
                         Vui lòng chọn ít nhất 1 tiêu chí để tiếp tục
